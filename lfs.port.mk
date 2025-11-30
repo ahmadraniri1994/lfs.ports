@@ -3,6 +3,7 @@ LIBDIR=/usr/lib
 SYSCONFDIR=/etc
 LIBEXECDIR=/usr/libexec
 BINDIR=/usr/bin
+PACKAGE = ${PKGNAME}_${VERSION}_${REVISION}_@${CATEGORIES}
 
 download:
 ifeq ($(SRCCD),archive)
@@ -54,24 +55,21 @@ package:
 ifeq ($(BUILD),meson)
 	@echo "Mode: Package Meson"
 	meson install --no-rebuild -C build --destdir package
-	install  -Dm644 $(PWD)/Makefile $(PWD)/build/package/var/lib/mk/${PKGNAME}.mk
+	install  -Dm644 $(PWD)/Makefile $(PWD)/build/package/var/lib/mk/${PACKAGE}.mk
 	$(POST_BUILD)
-	tar -C build/package -cvf \
-		${PKGNAME}_${VERSION}_${REVISION}_@${CATEGORIES}.tar.gz .
+	tar -C build/package -cvf ${PACKAGE}.tar.gz .
 else ifeq ($(BUILD),make)
 	@echo "Mode: Package Make"
 	make -j4 -C ${BUILDDIR} PREFIX=${PREFIX} DESTDIR="$(PWD)/package" install
-	install  -Dm644 $(PWD)/Makefile $(PWD)/package/var/lib/mk/${PKGNAME}.mk
+	install  -Dm644 $(PWD)/Makefile $(PWD)/package/var/lib/mk/${PACKAGE}.mk
 	$(POST_BUILD)
-	tar -C package -cvf \
-		${PKGNAME}_${VERSION}_${REVISION}_@${CATEGORIES}.tar.gz .
+	tar -C package -cvf ${PACKAGE}.tar.gz .
 else ifeq ($(BUILD),cmake)
 	@echo "Mode: Package Cmake"
 	DESTDIR="package" cmake --install build
-	install  -Dm644 $(PWD)/Makefile $(PWD)/package/var/lib/mk/${PKGNAME}.mk
+	install  -Dm644 $(PWD)/Makefile $(PWD)/package/var/lib/mk/${PACKAGE}.mk
 	$(POST_BUILD)
-	tar -C package -cvf \
-		${PKGNAME}_${VERSION}_${REVISION}_@${CATEGORIES}.tar.gz .
+	tar -C package -cvf ${PACKAGE}.tar.gz .
 else
 	$(error Unknown BUILD: ${BUILD}. Valid options are 'meson', 'make', or 'cmake')
 endif
