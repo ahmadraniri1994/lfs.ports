@@ -60,7 +60,11 @@ ifeq ($(BUILD),meson)
 	tar -C build/package -cvf ${PACKAGE}.tar.gz .
 else ifeq ($(BUILD),make)
 	@echo "Mode: Package Make"
-	make -j4 -C ${BUILDDIR} PREFIX=${PREFIX} ${MAKEFLAGS} ${MAKEOPT} DESTDIR="$(PWD)/package" install
+  ifeq ($(MKINST),yes)
+		make -j4 -C ${BUILDDIR} PREFIX=${PREFIX} ${MAKEFLAGS} ${MAKEOPT} DESTDIR="$(PWD)/package" install
+  else
+		@echo "No need to install"
+  endif
 	install  -Dm644 $(PWD)/Makefile $(PWD)/package/var/lib/mk/${PACKAGE}.mk
 	$(MAKE) post_build
 	tar -C package -cvf ${PACKAGE}.tar.gz .
