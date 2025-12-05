@@ -9,9 +9,10 @@ LINK = ${HOMEPAGE}/archive/refs/tags/${ARCHIVE}
 SRCCD = archive
 BUILD = make
 BUILDDIR = bleachbit-${VERSION}
+BUILD_OPTION = 
+MAKEOPT = "prefix=/usr"
 
 prepare:
-	patch -p1 -d ${BUILDDIR} -i $(PWD)/00_usr_as_default_prefix.patch 
 
 post_build:
 
