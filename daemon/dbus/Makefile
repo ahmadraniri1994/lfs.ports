@@ -1,6 +1,6 @@
 COMMENT = Freedesktop.org message bus system
 VERSION = 1.16.2
-REVISION = 0
+REVISION = 1
 CATEGORIES = daemon
 PKGNAME = dbus
 HOMEPAGE = https://www.freedesktop.org/Software/dbus
@@ -14,6 +14,8 @@ BUILD_OPTION =
 prepare:
 
 post_build:
+	chmod 4750 build/package/usr/libexec/dbus-daemon-launch-helper
+	chown -h root:messagebus build/package/usr/libexec/dbus-daemon-launch-helper
 
 post-install:
 	/usr/bin/dbus-uuidgen --ensure
