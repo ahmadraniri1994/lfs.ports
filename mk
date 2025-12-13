@@ -1,6 +1,7 @@
 #!/usr/bin/make -f
 
 package=$(shell basename -s .tar.gz ${PKG})
+TAR=/usr/bin/tar
 
 list:
 	@find /var/lib/mk/ \
@@ -42,7 +43,7 @@ install:
 	mkdir /usr/pkg/$(shell basename -s .tar.gz ${PKG})
 
 	echo "extracting & grafting package archive ${PKG}"
-	tar -xf ${PKG} -C /usr/pkg/$(shell basename -s .tar.gz ${PKG})
+	${TAR} -xf ${PKG} -C /usr/pkg/$(shell basename -s .tar.gz ${PKG})
 	graft -i -P -t / /usr/pkg/$(shell basename -s .tar.gz ${PKG})
 
 	echo "Run post-install target if available"
@@ -85,7 +86,7 @@ upgrade:
 	mkdir /usr/pkg/$(shell basename -s .tar.gz ${PKG})
 
 	@echo "extracting & grafting package archive ${PKG}"
-	tar -xf ${PKG} -C /usr/pkg/$(shell basename -s .tar.gz ${PKG})
+	${TAR} -xf ${PKG} -C /usr/pkg/$(shell basename -s .tar.gz ${PKG})
 	graft -i -P -t / /usr/pkg/$(shell basename -s .tar.gz ${PKG})
 
 	echo "Run post-install target if available"
