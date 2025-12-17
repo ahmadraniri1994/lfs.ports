@@ -4,6 +4,7 @@ SYSCONFDIR=/etc
 LIBEXECDIR=/usr/libexec
 BINDIR=/usr/bin
 PACKAGE = ${PKGNAME}-${VERSION}-${REVISION}@${CATEGORIES}
+DESTDIR = $(PWD)/package
 
 download:
 ifeq ($(SRCCD),archive)
@@ -65,7 +66,7 @@ else ifeq ($(BUILD),make)
   ifeq ($(MKINST),no)
 		@echo "No need to install"
   else
-		make -j4 -C ${BUILDDIR} PREFIX=${PREFIX} ${MAKEFLAGS} ${MAKEOPT} DESTDIR="$(PWD)/package" install
+		make -j4 -C ${BUILDDIR} PREFIX=${PREFIX} ${MAKEFLAGS} ${MAKEOPT} DESTDIR=${DESTDIR} install
   endif
 	install  -Dm644 $(PWD)/Makefile $(PWD)/package/var/lib/mk/${PACKAGE}.mk
 	$(MAKE) post_build
