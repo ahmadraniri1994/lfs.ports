@@ -1,7 +1,7 @@
 COMMENT = Low-level core library that forms the basis for projects such as GTK and GNOME
 VERSION = 2.86.3
 GI_VERSION = 1.86.0
-REVISION = 0
+REVISION = 1
 CATEGORIES = libs
 PKGNAME = glib2
 HOMEPAGE = https://wiki.gnome.org/Projects/GLib
@@ -22,7 +22,7 @@ prepare:
 	wget -c ${GOBJECT_LINK} 
 	wget -c ${GLIB_LINK} 
 
-glib-no-instrospection:
+glib-no-introspection:
 	tar -xf ${GLIB_ARCHIVE} 
 	meson setup \
 		--default-library=shared \
@@ -53,7 +53,7 @@ gobject-introspection:
 	meson compile -C gioutput
 	meson install --no-rebuild -C gioutput
 
-glib-with-instrospection:
+glib-with-introspection:
 	PATH="${_PREFIX}/bin:${PATH}" LD_LIBRARY_PATH="${_PREFIX}/lib" \
 		meson --reconfigure \
 		--prefix=/usr \
@@ -70,6 +70,8 @@ glib-with-instrospection:
 	PATH="${_PREFIX}/bin:${PATH}" LD_LIBRARY_PATH="${_PREFIX}/lib" meson \
 		compile -C build
 	DESTDIR="../pkg" meson install --no-rebuild -C build 
+
+custom-build: glib-no-introspection gobject-introspection glib-with-introspection 
 
 post_build:
 
