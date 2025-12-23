@@ -63,7 +63,7 @@ endif
 info:
 	@find /var/lib/mk/ \
 		-name "${PKG}-*.mk" \
-		-exec grep COMM -A 9 {} \;
+		-exec $(MAKE) -f {} info-package -s \;
 
 remove:
 	@echo "Uninstalling package at ${PKG}"
