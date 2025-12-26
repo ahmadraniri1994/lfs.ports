@@ -1,14 +1,15 @@
-COMMENT =Network security services.
-VERSION =3.118.1
-REVISION = 1
-CATEGORIES =net
-PKGNAME =nss
-HOMEPAGE =https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS
-ARCHIVE =nss-3.118.1.tar.gz
-LINK =https://archive.mozilla.org/pub/security/nss/releases/NSS_3_118_1_RTM/src/${ARCHIVE}
-SRCCD =archive
-BUILD =make
-BUILDDIR =nss-${VERSION}/nss
+COMMENT = Network security services.
+VERSION = 3.119.1
+_VERSION = 3_119_1
+REVISION = 0
+CATEGORIES = net
+PKGNAME = nss
+HOMEPAGE = https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS
+ARCHIVE = nss-3_119_1.tar.gz
+LINK = https://archive.mozilla.org/pub/security/nss/releases/NSS_3_119_1_RTM/src/${ARCHIVE}
+SRCCD = archive
+BUILD = make
+BUILDDIR = nss-${_VERSION}/nss
 MKINST = no
 MAKEOPT = BUILD_OPT=1 \
 	NSS_DISABLE_GTESTS=1 \
@@ -34,5 +35,7 @@ post_build:
 	cp -v -RL ${BUILDDIR}/../dist/{public,private}/nss/* package/usr/include/nss 
 	install -v -m755 ${BUILDDIR}/../dist/Linux*/bin/{certutil,nss-config,pk12util} package/usr/bin
 	install -v -m644 ${BUILDDIR}/../dist/Linux*/lib/pkgconfig/nss.pc package/usr/lib/pkgconfig
+
+post-install:
 
 include /usr/share/mk/lfs.port.mk
