@@ -1,0 +1,5 @@
+Name: mupdf
+Description: Library for rendering PDF documents
+URL: https://github.com/ArtifexSoftware/mupdf
+Version: 1.26.12
+Libs: -lmupdf
