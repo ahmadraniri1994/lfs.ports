@@ -1,2 +1,57 @@
 # lfs.ports
-Ports package build collection for LFS / linux distro in general. 
+
+## What's this ?
+
+Ports package build collection for LFS / linux distro in general.
+It's a collection of recipe to build package. 
+Using Makefile and bsd.port.mk-like (I call it as lfs.port.mk). 
+If you're familiar with `ports` from openbsd & freebsd, you would easily recognize it.
+There are 4 build types, `make`, `cmake`, `meson` and `custom`.
+
+
+## How to use it ?
+
+You could easily use it, but before that, you should have these requirements :
+- wget, to download source code. You could change it with your tool downloader.
+- build tools, like compiler (I use gcc mainly), make, meson, cmake.
+- tar, to create tar.gz package archive.
+- graft.
+- text editor.
+
+After you have those requirements, let's build our package !
+
+1. Pick a template package, for example `iceauth`. 
+1. Run these commands :
+
+	```
+	$ make download
+	$ make extract
+	$ make prepare
+	$ make build
+	$ make package
+	```
+
+	Explanation :
+	- **make download**, download source code.
+	- **make extract**, extract source code.
+	- **make prepare**, prepare build, like patching (if needed), edit the source code, etc.
+	- **make build**, build package.
+	- **make package**, create tar.gz package.
+
+1. Once the package's created, we can install it using [mk](https://github.com/lidgnulinux/lfs.ports/blob/main/mk) package manager.
+
+	```
+	$ sudo /path/to/mk a PKG=iceauth-1.0.10-0@xapps.tar.gz
+	```
+	
+	
+note : For more info about `mk`, you could read its documentation [here](https://github.com/lidgnulinux/lfs.ports/blob/main/man/mk.1).
+
+
+## Mirrors
+
+Mirrors :
+- [GitLab](https://gitlab.com/lidgnulinux/lfs-ports).
+- [Github 1](https://github.com/ahmadraniri/lfs.ports), [Github 2](https://github.com/ahmadraniri1994/lfs.ports). 
+- [darcs 1]((https://hub.darcs.net/ahmadraniri1994/lports), [darcs 2]((https://hub.darcs.net/lidgnulinux/lports).
+- [codeberg.org](https://codeberg.org/lidgnulinux/lfs.ports).
