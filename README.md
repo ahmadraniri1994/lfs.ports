@@ -20,6 +20,7 @@ You could easily use it, but before that, you should have these requirements :
 
 After you have those requirements, let's build our package !
 
+1. Copy `lfs.port.mk` to `/usr/share/mk`.
 1. Pick a template package, for example `iceauth`. 
 1. Run these commands :
 
