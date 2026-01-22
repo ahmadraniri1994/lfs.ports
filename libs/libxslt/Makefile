@@ -1,5 +1,5 @@
 COMMENT = XML stylesheet transformation library
-VERSION = 1.1.43
+VERSION = 1.1.45
 REVISION = 0
 CATEGORIES = libs
 PKGNAME = libxslt
