@@ -1,6 +1,6 @@
-COMMENT = dwm for Wayland with ipc patch and gaps + foreign-toplevel (optional) 
+COMMENT = dwm for Wayland with ipc patch and gaps + foreign-toplevel + menu (optional) 
 VERSION = v0.8.c9b11a49c
-REVISION = 3
+REVISION = 4
 CATEGORIES = wayland
 PKGNAME = dwl_ipc
 HOMEPAGE = https://codeberg.org/dwl/dwl
@@ -29,6 +29,13 @@ else
 	@echo "skipping applying foreign-toplevel patch."
 endif
 
+ifeq ($(MENU),YES)
+	@echo "applying menu patch."
+	patch -p1 -d ${BUILDDIR} -i $(PWD)/patch/optional-menu-commit.9b11a49c.patch
+else
+	@echo "skipping applying menu patch."
+endif
+
 config:
 	${EDITOR} ${BUILDDIR}/config.def.h
 
@@ -37,7 +44,12 @@ post_build:
 	mv package/usr/share/man/man1/dwl.1 package/usr/share/man/man1/dwl_ipc.1
 	rm package/usr/share/wayland-sessions/dwl.desktop
 	cp -r dwl_ipc.desktop package/usr/share/wayland-sessions/
+	mkdir -p package/usr/share/doc/dwl_ipc
+	cp -r ${BUILDDIR}/config.def.h package/usr/share/doc/dwl_ipc
 
 post-install:
+	@echo ""
+	@echo -e "\e[1mRemember to check /usr/share/doc/dwl_ipc/config.def.h to see available keybinds.\e[0m"
+	@echo ""
 
 include /usr/share/mk/lfs.port.mk
